@@ -88,8 +88,8 @@ class _NetworkInterfacesPageState extends State<NetworkInterfacesPage> {
                       interface: e.$2,
                     );
                     final style = ignored
-                        ? const TextStyle(
-                            color: Colors.grey,
+                        ? TextStyle(
+                            color: Theme.of(context).disabledColor,
                             decoration: TextDecoration.lineThrough,
                           )
                         : null;

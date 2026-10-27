@@ -108,7 +108,7 @@ class _QuickActionsDialogState extends State<QuickActionsDialog> with Refena {
               visible: !_isValid,
               child: Text(
                 t.sanitization.invalid,
-                style: TextStyle(color: Theme.of(context).colorScheme.warning),
+                style: TextStyle(color: Theme.of(context).warningColor),
               ),
             ),
             const SizedBox(height: 10),

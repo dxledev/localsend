@@ -30,7 +30,7 @@ class DeviceListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final badgeColor = Color.lerp(Theme.of(context).colorScheme.secondaryContainer, Colors.white, 0.3)!;
+    final colorScheme = Theme.of(context).colorScheme;
     return CustomListTile(
       icon: Icon(device.deviceType.icon, size: 46),
       title: Row(
@@ -54,7 +54,7 @@ class DeviceListTile extends StatelessWidget {
         spacing: 10,
         children: [
           if (info != null)
-            Text(info!, style: const TextStyle(color: Colors.grey))
+            Text(info!, style: TextStyle(color: colorScheme.onSurfaceVariant))
           else if (progress != null)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
@@ -63,20 +63,20 @@ class DeviceListTile extends StatelessWidget {
           else ...[
             if (device.ip != null)
               DeviceBadge(
-                backgroundColor: badgeColor,
-                foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
+                backgroundColor: colorScheme.secondaryContainer,
+                foregroundColor: colorScheme.onSecondaryContainer,
                 label: 'HTTP',
               )
             else
               DeviceBadge(
-                backgroundColor: badgeColor,
-                foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
+                backgroundColor: colorScheme.secondaryContainer,
+                foregroundColor: colorScheme.onSecondaryContainer,
                 label: 'WebRTC',
               ),
             if (device.deviceModel != null)
               DeviceBadge(
-                backgroundColor: badgeColor,
-                foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
+                backgroundColor: colorScheme.secondaryContainer,
+                foregroundColor: colorScheme.onSecondaryContainer,
                 label: device.deviceModel!,
               ),
           ],

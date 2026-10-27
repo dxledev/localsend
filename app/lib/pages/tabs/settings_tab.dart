@@ -320,7 +320,7 @@ class SettingsTab extends StatelessWidget {
                   firstChild: Container(),
                   secondChild: Padding(
                     padding: const EdgeInsets.only(bottom: 15),
-                    child: Text(t.settingsTab.network.needRestart, style: TextStyle(color: Theme.of(context).colorScheme.warning)),
+                    child: Text(t.settingsTab.network.needRestart, style: TextStyle(color: Theme.of(context).warningColor)),
                   ),
                 ),
                 _SettingsEntry(
@@ -505,7 +505,7 @@ class SettingsTab extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 15),
                     child: Text(
                       t.settingsTab.network.portWarning(defaultPort: defaultPort),
-                      style: const TextStyle(color: Colors.grey),
+                      style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                   ),
                 ),
@@ -518,7 +518,7 @@ class SettingsTab extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 15),
                     child: Text(
                       t.settingsTab.network.multicastGroupWarning(defaultMulticast: defaultMulticastGroup),
-                      style: const TextStyle(color: Colors.grey),
+                      style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                   ),
                 ),

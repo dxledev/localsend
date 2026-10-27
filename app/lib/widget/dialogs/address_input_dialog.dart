@@ -167,29 +167,29 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
           if (_mode == _InputMode.hashtag) ...[
             Text(
               '${t.general.example}: 123',
-              style: const TextStyle(color: Colors.grey),
+              style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
             if (localIps.length <= 1)
               Text(
                 '${t.dialogs.addressInput.ip}: ${localIps.firstOrNull?.ipPrefix ?? '192.168.2'}.$_input',
-                style: const TextStyle(color: Colors.grey),
+                style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
               )
             else ...[
               Text(
                 '${t.dialogs.addressInput.ip}:',
-                style: const TextStyle(color: Colors.grey),
+                style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
               for (final ip in localIps)
                 Text(
                   '- ${ip.ipPrefix}.$_input',
-                  style: const TextStyle(color: Colors.grey),
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                 ),
             ],
           ] else ...[
             if (lastDevices.isEmpty)
               Text(
                 '${t.general.example}: ${localIps.firstOrNull?.ipPrefix ?? '192.168.2'}.123',
-                style: const TextStyle(color: Colors.grey),
+                style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
               )
             else
               Text.rich(
@@ -217,7 +217,7 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
               padding: const EdgeInsets.only(top: 10),
               child: Row(
                 children: [
-                  Text(t.general.error, style: TextStyle(color: Theme.of(context).colorScheme.warning)),
+                  Text(t.general.error, style: TextStyle(color: Theme.of(context).warningColor)),
                   if (_error != null) ...[
                     const SizedBox(width: 5),
                     InkWell(
@@ -229,7 +229,7 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Icon(Icons.info, color: Theme.of(context).colorScheme.warning, size: 20),
+                        child: Icon(Icons.info, color: Theme.of(context).warningColor, size: 20),
                       ),
                     ),
                   ],

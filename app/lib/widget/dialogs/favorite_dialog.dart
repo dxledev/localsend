@@ -78,7 +78,7 @@ class _FavoritesDialogState extends State<FavoritesDialog> with Refena {
           if (favorites.isEmpty)
             Text(
               t.dialogs.favoriteDialog.noFavorites,
-              style: const TextStyle(color: Colors.grey),
+              style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           for (final favorite in favorites)
             Row(
@@ -105,7 +105,7 @@ class _FavoritesDialogState extends State<FavoritesDialog> with Refena {
               padding: const EdgeInsets.only(top: 10),
               child: Row(
                 children: [
-                  Text(t.general.error, style: TextStyle(color: Theme.of(context).colorScheme.warning)),
+                  Text(t.general.error, style: TextStyle(color: Theme.of(context).warningColor)),
                   if (_error != null) ...[
                     const SizedBox(width: 5),
                     InkWell(
@@ -117,7 +117,7 @@ class _FavoritesDialogState extends State<FavoritesDialog> with Refena {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Icon(Icons.info, color: Theme.of(context).colorScheme.warning, size: 20),
+                        child: Icon(Icons.info, color: Theme.of(context).warningColor, size: 20),
                       ),
                     ),
                   ],

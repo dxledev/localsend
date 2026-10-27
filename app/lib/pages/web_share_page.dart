@@ -155,7 +155,7 @@ class _WebSharePageState extends State<WebSharePage> with Refena {
                       ),
                     ),
                   ] else if (_initializedError != null) ...[
-                    const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                    Icon(Icons.error_outline, size: 48, color: Theme.of(context).colorScheme.error),
                     const SizedBox(height: 10),
                     Center(
                       child: Text(t.webSharePage.error, style: Theme.of(context).textTheme.titleLarge),
@@ -284,11 +284,16 @@ class _WebSharePageState extends State<WebSharePage> with Refena {
                                     Text(
                                       session.deviceInfo,
                                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                        color: session.pending ? Theme.of(context).colorScheme.warning : null,
+                                        color: session.pending ? Theme.of(context).warningColor : null,
                                       ),
                                     ),
                                     const SizedBox(height: 5),
-                                    Text(session.ip, style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.grey)),
+                                    Text(
+                                      session.ip,
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -346,7 +351,7 @@ class _WebSharePageState extends State<WebSharePage> with Refena {
                 if (_encrypted)
                   Text(
                     t.webSharePage.encryptionHint,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.warning),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).warningColor),
                   ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -395,7 +400,7 @@ class _WebSharePageState extends State<WebSharePage> with Refena {
                 if (pin != null)
                   Text(
                     t.webSharePage.pinHint(pin: pin),
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.warning),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).warningColor),
                   ),
               ],
             );

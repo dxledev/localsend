@@ -95,7 +95,7 @@ class _FavoriteEditDialogState extends State<FavoriteEditDialog> with Refena {
               const SizedBox(height: 16),
               TextButton.icon(
                 style: TextButton.styleFrom(
-                  foregroundColor: Theme.of(context).colorScheme.warning,
+                  foregroundColor: Theme.of(context).warningColor,
                 ),
                 onPressed: () async {
                   final result = await showDialog<bool>(
@@ -119,7 +119,7 @@ class _FavoriteEditDialogState extends State<FavoriteEditDialog> with Refena {
                 padding: const EdgeInsets.only(top: 10),
                 child: Row(
                   children: [
-                    Text(t.general.error, style: TextStyle(color: Theme.of(context).colorScheme.warning)),
+                    Text(t.general.error, style: TextStyle(color: Theme.of(context).warningColor)),
                     if (_error != null) ...[
                       const SizedBox(width: 5),
                       InkWell(
@@ -131,7 +131,7 @@ class _FavoriteEditDialogState extends State<FavoriteEditDialog> with Refena {
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Icon(Icons.info, color: Theme.of(context).colorScheme.warning, size: 20),
+                          child: Icon(Icons.info, color: Theme.of(context).warningColor, size: 20),
                         ),
                       ),
                     ],

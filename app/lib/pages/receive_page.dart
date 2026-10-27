@@ -312,7 +312,7 @@ class _Actions extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 20),
             child: Text(
               t.receivePage.canceled,
-              style: TextStyle(color: Theme.of(context).colorScheme.warning),
+              style: TextStyle(color: Theme.of(context).warningColor),
               textAlign: TextAlign.center,
             ),
           ),

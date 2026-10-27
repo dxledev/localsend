@@ -4,26 +4,34 @@ import 'package:localsend_app/gen/strings.g.dart';
 import 'package:localsend_app/model/persistence/color_mode.dart';
 import 'package:localsend_app/provider/device_info_provider.dart';
 import 'package:localsend_app/util/native/platform_check.dart';
+import 'package:localsend_app/util/ui/desktop_palette.dart';
 import 'package:localsend_app/util/ui/dynamic_colors.dart';
+import 'package:localsend_app/util/ui/semantic_colors.dart';
 import 'package:refena_flutter/refena_flutter.dart';
 import 'package:yaru/yaru.dart' as yaru;
 
 final _borderRadius = BorderRadius.circular(5);
 
-ThemeData getTheme(ColorMode colorMode, Color customColor, Brightness brightness, DynamicColors? dynamicColors) {
-  if (colorMode == ColorMode.yaru) {
+ThemeData getTheme(
+  ColorMode colorMode,
+  Color customColor,
+  Brightness brightness,
+  DynamicColors? dynamicColors, {
+  DesktopPalette? desktopPalette,
+}) {
+  if (colorMode == ColorMode.yaru && desktopPalette == null) {
     return _getYaruTheme(brightness);
   }
 
-  final colorScheme = _determineColorScheme(colorMode, customColor, brightness, dynamicColors);
+  final colorScheme = desktopPalette?.colorScheme ?? _determineColorScheme(colorMode, customColor, brightness, dynamicColors);
 
   final lightInputBorder = OutlineInputBorder(
-    borderSide: BorderSide(color: colorScheme.secondaryContainer),
+    borderSide: BorderSide(color: desktopPalette == null ? colorScheme.secondaryContainer : colorScheme.outline),
     borderRadius: _borderRadius,
   );
 
   final darkInputBorder = OutlineInputBorder(
-    borderSide: BorderSide(color: colorScheme.secondaryContainer),
+    borderSide: BorderSide(color: desktopPalette == null ? colorScheme.secondaryContainer : colorScheme.outline),
     borderRadius: _borderRadius,
   );
 
@@ -51,25 +59,51 @@ ThemeData getTheme(ColorMode colorMode, Color customColor, Brightness brightness
 
   return ThemeData(
     colorScheme: colorScheme,
+    extensions: [
+      if (desktopPalette != null) SemanticColors(warning: desktopPalette.warning, success: desktopPalette.success),
+    ],
     useMaterial3: true,
     // same density on all platforms so desktop matches mobile (defaults to compact on desktop)
     visualDensity: VisualDensity.standard,
-    navigationBarTheme: colorScheme.brightness == Brightness.dark
+    navigationBarTheme: desktopPalette != null
+        ? NavigationBarThemeData(
+            backgroundColor: colorScheme.surfaceContainer,
+            indicatorColor: colorScheme.primaryContainer,
+            iconTheme: WidgetStateProperty.resolveWith(
+              (states) => IconThemeData(
+                color: states.contains(WidgetState.selected) ? colorScheme.onPrimaryContainer : colorScheme.onSurfaceVariant,
+              ),
+            ),
+            labelTextStyle: WidgetStateProperty.all(TextStyle(color: colorScheme.onSurface)),
+          )
+        : colorScheme.brightness == Brightness.dark
         ? NavigationBarThemeData(
             iconTheme: WidgetStateProperty.all(const IconThemeData(color: Colors.white)),
           )
         : null,
+    navigationRailTheme: desktopPalette == null
+        ? null
+        : NavigationRailThemeData(
+            backgroundColor: colorScheme.surfaceContainer,
+            indicatorColor: colorScheme.primaryContainer,
+            selectedIconTheme: IconThemeData(color: colorScheme.onPrimaryContainer),
+            unselectedIconTheme: IconThemeData(color: colorScheme.onSurfaceVariant),
+            selectedLabelTextStyle: TextStyle(color: colorScheme.onSurface),
+            unselectedLabelTextStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+          ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: colorScheme.secondaryContainer,
       border: colorScheme.brightness == Brightness.light ? lightInputBorder : darkInputBorder,
-      focusedBorder: colorScheme.brightness == Brightness.light ? lightInputBorder : darkInputBorder,
+      focusedBorder: desktopPalette == null
+          ? (colorScheme.brightness == Brightness.light ? lightInputBorder : darkInputBorder)
+          : lightInputBorder.copyWith(borderSide: BorderSide(color: colorScheme.primary, width: 2)),
       enabledBorder: colorScheme.brightness == Brightness.light ? lightInputBorder : darkInputBorder,
       contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        foregroundColor: colorScheme.brightness == Brightness.dark ? Colors.white : null,
+        foregroundColor: desktopPalette != null ? colorScheme.primary : (colorScheme.brightness == Brightness.dark ? Colors.white : null),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       ),
     ),
@@ -80,6 +114,13 @@ ThemeData getTheme(ColorMode colorMode, Color customColor, Brightness brightness
     ),
     fontFamily: fontFamily,
   );
+}
+
+ThemeMode getEffectiveThemeMode(ThemeMode themeMode, ColorMode colorMode, DesktopPalette? desktopPalette) {
+  if (themeMode == ThemeMode.system && desktopPalette != null) {
+    return desktopPalette.colorScheme.brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+  }
+  return colorMode == ColorMode.oled ? ThemeMode.dark : themeMode;
 }
 
 Future<void> updateSystemOverlayStyle(BuildContext context) async {
@@ -116,6 +157,10 @@ Future<void> updateSystemOverlayStyleWithBrightness(Brightness brightness) async
 }
 
 extension ThemeDataExt on ThemeData {
+  Color get warningColor => extension<SemanticColors>()?.warning ?? Colors.orange;
+
+  Color get successColor => extension<SemanticColors>()?.success ?? Colors.green;
+
   /// This is the actual [cardColor] being used.
   Color get cardColorWithElevation {
     return ElevationOverlay.applySurfaceTint(cardColor, colorScheme.surfaceTint, 1);
@@ -123,10 +168,6 @@ extension ThemeDataExt on ThemeData {
 }
 
 extension ColorSchemeExt on ColorScheme {
-  Color get warning {
-    return Colors.orange;
-  }
-
   Color? get secondaryContainerIfDark {
     return brightness == Brightness.dark ? secondaryContainer : null;
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localsend_app/config/theme.dart';
 import 'package:localsend_app/gen/strings.g.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
 import 'package:localsend_app/util/i18n.dart';
@@ -39,7 +40,7 @@ class LanguagePage extends StatelessWidget {
                   ),
                   if (locale == activeLocale) ...[
                     const SizedBox(width: 10),
-                    const Icon(Icons.check_circle, color: Colors.green),
+                    Icon(Icons.check_circle, color: Theme.of(context).successColor),
                   ],
                 ],
               ),

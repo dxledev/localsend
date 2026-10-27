@@ -49,7 +49,7 @@ class _PinDialogState extends State<PinDialog> {
               padding: const EdgeInsets.only(top: 8),
               child: Text(
                 t.web.invalidPin,
-                style: TextStyle(color: Theme.of(context).colorScheme.warning),
+                style: TextStyle(color: Theme.of(context).warningColor),
               ),
             ),
         ],

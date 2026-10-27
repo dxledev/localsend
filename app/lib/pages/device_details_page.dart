@@ -110,7 +110,7 @@ class _DeviceDetailsPageState extends State<DeviceDetailsPage> with Refena {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 15, bottom: 5),
-                      child: Text(entry.key, style: const TextStyle(color: Colors.grey)),
+                      child: Text(entry.key, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 5),
@@ -124,7 +124,7 @@ class _DeviceDetailsPageState extends State<DeviceDetailsPage> with Refena {
           Text(t.deviceDetailsPage.logs.title, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 10),
           if (_logs.isEmpty)
-            Text(t.deviceDetailsPage.logs.empty, style: const TextStyle(color: Colors.grey))
+            Text(t.deviceDetailsPage.logs.empty, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant))
           else
             ..._logs.map(
               (log) => Padding(

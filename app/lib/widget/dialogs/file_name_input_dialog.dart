@@ -90,7 +90,7 @@ class _FileNameInputDialogState extends State<FileNameInputDialog> {
             child: Text(
               _errorMessage,
               style: TextStyle(
-                color: Theme.of(context).colorScheme.warning,
+                color: Theme.of(context).warningColor,
               ),
             ),
           ),

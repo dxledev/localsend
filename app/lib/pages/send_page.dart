@@ -194,7 +194,7 @@ class _SendPageState extends State<SendPage> with Refena {
                                 padding: const EdgeInsets.only(bottom: 20),
                                 child: Text(
                                   t.sendPage.rejected,
-                                  style: TextStyle(color: Theme.of(context).colorScheme.warning),
+                                  style: TextStyle(color: Theme.of(context).warningColor),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -202,7 +202,7 @@ class _SendPageState extends State<SendPage> with Refena {
                                 padding: const EdgeInsets.only(bottom: 20),
                                 child: Text(
                                   t.sendPage.tooManyAttempts,
-                                  style: TextStyle(color: Theme.of(context).colorScheme.warning),
+                                  style: TextStyle(color: Theme.of(context).warningColor),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -210,7 +210,7 @@ class _SendPageState extends State<SendPage> with Refena {
                                 padding: const EdgeInsets.only(bottom: 20),
                                 child: Text(
                                   t.sendPage.busy,
-                                  style: TextStyle(color: Theme.of(context).colorScheme.warning),
+                                  style: TextStyle(color: Theme.of(context).warningColor),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -219,11 +219,11 @@ class _SendPageState extends State<SendPage> with Refena {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(t.general.error, style: TextStyle(color: Theme.of(context).colorScheme.warning)),
+                                    Text(t.general.error, style: TextStyle(color: Theme.of(context).warningColor)),
                                     if (sendState.errorMessage != null)
                                       TextButton(
                                         style: TextButton.styleFrom(
-                                          foregroundColor: Theme.of(context).colorScheme.warning,
+                                          foregroundColor: Theme.of(context).warningColor,
                                           iconSize: 24,
                                         ),
                                         onPressed: () async => showDialog(

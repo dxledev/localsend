@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localsend_app/config/theme.dart';
 import 'package:localsend_app/gen/strings.g.dart';
 import 'package:localsend_app/pages/receive_page.dart';
 import 'package:localsend_app/provider/network/server/server_provider.dart';
@@ -93,7 +94,10 @@ class ReceiveOptionsPage extends StatelessWidget {
                           if (receiveSession.containsDirectories && !receiveSession.saveToGallery) ...[
                             const SizedBox(width: 10),
                             Expanded(
-                              child: Text(t.receiveOptionsPage.saveToGalleryOff, style: const TextStyle(color: Colors.grey)),
+                              child: Text(
+                                t.receiveOptionsPage.saveToGalleryOff,
+                                style: TextStyle(color: Theme.of(context).disabledColor),
+                              ),
                             ),
                           ],
                         ],
@@ -152,8 +156,10 @@ class ReceiveOptionsPage extends StatelessWidget {
                         '${!selectState.containsKey(file.id) ? t.general.skipped : (selectState[file.id] == file.fileName ? t.general.unchanged : t.general.renamed)} - ${file.size.asReadableFileSize}',
                         style: TextStyle(
                           color: !selectState.containsKey(file.id)
-                              ? Colors.grey
-                              : (selectState[file.id] == file.fileName ? Theme.of(context).colorScheme.onSecondaryContainer : Colors.orange),
+                              ? Theme.of(context).disabledColor
+                              : (selectState[file.id] == file.fileName
+                                    ? Theme.of(context).colorScheme.onSecondaryContainer
+                                    : Theme.of(context).warningColor),
                         ),
                       ),
                     ],

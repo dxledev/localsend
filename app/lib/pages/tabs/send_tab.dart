@@ -251,13 +251,13 @@ class SendTab extends StatelessWidget {
                     children: [
                       Text(
                         t.sendTab.help,
-                        style: const TextStyle(color: Colors.grey),
+                        style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                         textAlign: TextAlign.center,
                       ),
                       if (checkPlatformCanReceiveShareIntent())
                         Text(
                           t.sendTab.shareIntentInfo,
-                          style: const TextStyle(color: Colors.grey),
+                          style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                           textAlign: TextAlign.center,
                         ),
                     ],
@@ -297,7 +297,7 @@ class _CircularPopupButton<T> extends StatelessWidget {
         type: MaterialType.transparency,
         child: DividerTheme(
           data: DividerThemeData(
-            color: Theme.of(context).brightness == Brightness.light ? Colors.teal.shade100 : Colors.grey.shade700,
+            color: Theme.of(context).colorScheme.outlineVariant,
           ),
           child: PopupMenuButton(
             offset: const Offset(0, 40),
@@ -326,7 +326,7 @@ class _ScanButton extends StatelessWidget {
     final animations = context.ref.watch(animationProvider);
 
     final spinning = (scanningFavorites || scanningIps.isNotEmpty) && animations;
-    final iconColor = !animations && scanningIps.isNotEmpty ? Theme.of(context).colorScheme.warning : null;
+    final iconColor = !animations && scanningIps.isNotEmpty ? Theme.of(context).warningColor : null;
 
     if (ips.length <= StartSmartScan.maxInterfaces) {
       return Tooltip(

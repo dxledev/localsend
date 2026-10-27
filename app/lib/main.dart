@@ -4,8 +4,8 @@ import 'package:localsend_app/config/init.dart';
 import 'package:localsend_app/config/init_error.dart';
 import 'package:localsend_app/config/theme.dart';
 import 'package:localsend_app/gen/strings.g.dart';
-import 'package:localsend_app/model/persistence/color_mode.dart';
 import 'package:localsend_app/pages/home_page.dart';
+import 'package:localsend_app/provider/desktop_theme_provider.dart';
 import 'package:localsend_app/provider/local_ip_provider.dart';
 import 'package:localsend_app/provider/network/server/server_provider.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
@@ -56,6 +56,7 @@ class LocalSendApp extends StatelessWidget {
       settingsProvider.select((settings) => (settings.theme, settings.colorMode, settings.customColor)),
     );
     final dynamicColors = ref.watch(dynamicColorsProvider);
+    final desktopPalette = themeMode == ThemeMode.system ? ref.watch(desktopThemeProvider) : null;
     return TrayWatcher(
       child: WindowWatcher(
         child: LifeCycleWatcher(
@@ -89,9 +90,9 @@ class LocalSendApp extends StatelessWidget {
               supportedLocales: AppLocaleUtils.supportedLocales,
               localizationsDelegates: GlobalMaterialLocalizations.delegates,
               debugShowCheckedModeBanner: false,
-              theme: getTheme(colorMode, customColor, Brightness.light, dynamicColors),
-              darkTheme: getTheme(colorMode, customColor, Brightness.dark, dynamicColors),
-              themeMode: colorMode == ColorMode.oled ? ThemeMode.dark : themeMode,
+              theme: getTheme(colorMode, customColor, Brightness.light, dynamicColors, desktopPalette: desktopPalette),
+              darkTheme: getTheme(colorMode, customColor, Brightness.dark, dynamicColors, desktopPalette: desktopPalette),
+              themeMode: getEffectiveThemeMode(themeMode, colorMode, desktopPalette),
               builder: (context, child) => WindowBrightnessWatcher(child: child!),
               navigatorKey: context.read(navigationProvider).key,
               home: RouterinoHome(

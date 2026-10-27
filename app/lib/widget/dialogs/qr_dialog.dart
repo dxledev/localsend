@@ -62,7 +62,7 @@ class QrDialog extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 5),
                     child: Text(
                       t.webSharePage.pendingRequests(n: pending),
-                      style: TextStyle(color: Theme.of(context).colorScheme.warning),
+                      style: TextStyle(color: Theme.of(context).warningColor),
                       textAlign: TextAlign.center,
                     ),
                   );
